@@ -1,0 +1,30 @@
+{
+  "name": "sails-service-storage",
+  "version": "0.0.1",
+  "description": "Service for Sails framework with Storage features",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "istanbul cover _mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ghaiklor/sails-service-storage.git"
+  },
+  "keywords": [
+    "sails",
+    "service",
+    "storage"
+  ],
+  "author": "ghaiklor",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ghaiklor/sails-service-storage/issues"
+  },
+  "homepage": "https://github.com/ghaiklor/sails-service-storage#readme",
+  "devDependencies": {
+    "babel": "^5.2.17"
+  }
+}
