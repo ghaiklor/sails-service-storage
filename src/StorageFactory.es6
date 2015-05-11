@@ -1,50 +1,23 @@
-var AmazonStorage = require('./AmazonStorage');
-var GCloudStorage = require('./GCloudStorage');
+import AmazonStorage from 'AmazonStorage';
+import GCloudStorage from 'GCloudStorage';
 
-/**
- * Storage factory class
- * @constructor
- */
-function StorageFactory() {
-}
-
-StorageFactory.prototype = Object.create({
-  constructor: StorageFactory,
-
-  /**
-   * Create new storage instance
-   * @param {String} type Type of storage
-   * @param {Object} options Config for storage
-   * @returns {*} Returns created instance of storage
-   */
-  create: function (type, options) {
+export default class StorageFactory {
+  static create(type, options) {
     switch (type) {
       case 'amazon':
-        return this.createAmazon(options);
+        return StorageFactory.createAmazon(options);
       case 'gcloud':
-        return this.createGCloud(options);
+        return StorageFactory.createGCloud(options);
       default:
         throw new Error('Unrecognized type -> ' + type);
     }
-  },
+  }
 
-  /**
-   * Create Amazon storage instance
-   * @param {Object} options Config with accessKeyId and secretAccessKey properties
-   * @returns {AmazonStorage}
-   */
-  createAmazon: function (options) {
+  static createAmazon(options) {
     return new AmazonStorage(options);
-  },
+  }
 
-  /**
-   * Create GCloud storage instance
-   * @param {Object} options Config with keyFilename and projectId properties
-   * @returns {GCloudStorage}
-   */
-  createGCloud: function (options) {
+  static createGCloud(options) {
     return new GCloudStorage(options);
   }
-});
-
-module.exports = StorageFactory;
+}

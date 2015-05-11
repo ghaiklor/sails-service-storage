@@ -1,31 +1,15 @@
-/**
- * Implement message
- * @type {String}
- * @private
- */
-var IMPLEMENT_MESSAGE = "Not implemented";
+const IMPLEMENT_MESSAGE = 'You should implement this method';
 
-/**
- * Base storage super class
- * @constructor
- */
-function BaseStorage() {
-}
-
-BaseStorage.prototype = Object.create({
-  constructor: BaseStorage,
-
-  upload: function () {
-    throw new Error(IMPLEMENT_MESSAGE);
-  },
-
-  get: function () {
-    throw new Error(IMPLEMENT_MESSAGE);
-  },
-
-  remove: function () {
+export default class BaseStorage {
+  upload() {
     throw new Error(IMPLEMENT_MESSAGE);
   }
-});
 
-module.exports = BaseStorage;
+  get() {
+    throw new Error(IMPLEMENT_MESSAGE);
+  }
+
+  remove() {
+    throw new Error(IMPLEMENT_MESSAGE);
+  }
+}
