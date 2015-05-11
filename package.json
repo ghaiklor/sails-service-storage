@@ -7,7 +7,9 @@
     "test": "test"
   },
   "scripts": {
-    "test": "istanbul cover _mocha"
+    "compile": "babel src --out-dir lib",
+    "test": "istanbul cover _mocha -- --compilers js:babel/register",
+    "prepublish": "npm run test && npm run compile"
   },
   "repository": {
     "type": "git",
