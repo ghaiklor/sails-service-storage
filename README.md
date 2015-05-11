@@ -4,17 +4,64 @@
 
 Service for Sails framework with Storage features.
 
+> Stability: 1 - Experimental
+> This module was introduced recently, and may change or be removed in future versions.
+> Please try it out and provide feedback.
+> If it addresses a use-case that is important to you, tell the core developer.
+
 ## Getting Started
 
-Just install it as module and require in your Sails service folder:
+Install module as dependency:
 
 ```shell
 npm install --save sails-service-storage
 ```
 
+Require installed module to your service:
+
 ```javascript
 // api/services/StorageService.js
 module.exports = require('sails-service-storage');
+```
+
+Upload some file, i.e. to Amazon:
+
+```javascript
+// api/controllers/SomeController.js
+module.exports = {
+  index: function(req, res) {
+    StorageService
+      .create('amazon')
+      .upload('my-file-name.png')
+      .then(res.ok)
+      .catch(res.serverError);
+  }
+};
+```
+
+## Advanced Usage
+
+When you requiring module, actually you'll get created Factory instance and pointer to Factory class for your advanced usage.
+
+```javascript
+var Storage = require('sails-service-storage');
+var StorageFactory = require('sails-service-storage').Factory;
+// or
+var StorageFactory = Storage.Factory;
+```
+
+Then you can use as already created Factory instance either create your own:
+
+```javascript
+var Storage = require('sails-service-storage');
+var StorageFactory = require('sails-service-storage').Factory;
+
+// Create instance for uploading to Amazon
+var AmazonUploader = Storage.create('amazon');
+
+// Or create your own Factory
+var MyOwnFactory = new StorageFactory();
+var AmazonUploaderFromMyFactory = MyOwnFactory.create('amazon');
 ```
 
 ## License
