@@ -1,3 +1,2 @@
---require test/babelhook
+--compilers js:babel/register
 --reporter spec
---compilers es6.js:babel/register

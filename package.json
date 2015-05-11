@@ -3,9 +3,6 @@
   "version": "0.0.1",
   "description": "Service for Sails framework with Storage features",
   "main": "index.js",
-  "directories": {
-    "test": "test"
-  },
   "scripts": {
     "compile": "babel src --out-dir lib",
     "test": "istanbul cover _mocha",
