@@ -4,7 +4,7 @@
 
 Service for Sails framework with Storage features.
 
-> Stability: 1 - Experimental
+> Stability: 1 - Experimental.
 > This module was introduced recently, and may change or be removed in future versions.
 > Please try it out and provide feedback.
 > If it addresses a use-case that is important to you, tell the core developer.
