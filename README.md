@@ -9,6 +9,34 @@ Service for Sails framework with Storage features.
 > Please try it out and provide feedback.
 > If it addresses a use-case that is important to you, tell the core developer.
 
+## Draft (how services should be done)
+
+Each service should expose Factory that can be instantiated with predefined features.
+Also service should export already instantiated Factory class.
+
+```javascript
+module.exports = new SomeFactory();
+module.exports.Factory = SomeFactory;
+```
+
+When you create new instance of Factory, you can set predefined options like:
+
+```javascript
+var AmazonFactory = new SomeFactory('amazon');
+```
+
+And then you can use service methods:
+
+```javascript
+new SomeFactory().create('amazon').upload('some-file.png').then(res.ok).catch(res.serverError);
+
+var AmazonFactory = new SomeFactory('amazon', {
+  ACCESS_KEY: '1234',
+  SECRET_KEY: '1234'
+});
+AmazonFactory.create().upload('some-file.png').then(res.ok).catch(res.serverError);
+```
+
 ## Getting Started
 
 Install module as dependency:
