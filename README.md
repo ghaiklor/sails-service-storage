@@ -14,6 +14,8 @@ Service for Sails framework with Storage features.
 Each service should export Factory class that can be instantiated from developer-side.
 Also service should export already instantiated Factory class with empty params.
 
+So, when you are developing module, your index file should be smth like this:
+
 ```javascript
 var StorageFactory = require('./lib/StorageFactory');
 
@@ -34,7 +36,55 @@ module.exports = require('sails-service-storage');
 // StorageController.js
 module.exports = {
   upload: function(req, res) {
-    StorageService.create('amazon', {some: 'options'}).upload('some-file.png').then(res.ok).catch(res.serverError);
+    StorageService
+      .create('amazon', {some: 'options'})
+      .upload('some-file.png')
+      .then(res.ok)
+      .catch(res.serverError);
+  }
+};
+```
+
+Or you can create storage service in services and pre-define which storage service is using:
+
+```javascript
+// api/services/StorageService.js
+module.exports = require('sails-service-storage').create('amazon', {some: 'options'});
+
+// StorageController.js
+module.exports = {
+  upload: function(req, req) {
+    StorageService
+      .upload('some-file.png')
+      .then(res.ok)
+      .catch(res.serverError);
+  }
+};
+```
+
+Or, if you want to choose different services till developing:
+
+```javascript
+// api/services/StorageService.js
+module.exports = require('sails-service-storage');
+
+// StorageController.js
+var AmazonStorage = StorageService.create('amazon', {some: 'options'});
+var GoogleStorage = StorageService.create('gcloud', {some: 'options'});
+
+module.exports = {
+  amazon: function(req, res) {
+    AmazonStorage
+      .upload('some-file.png')
+      .then(res.ok)
+      .catch(res.serverError);
+  },
+  
+  google: function(req, res) {
+    GoogleStorage
+      .upload('some-file.png')
+      .then(res.ok)
+      .catch(res.serverError);
   }
 };
 ```
@@ -44,18 +94,24 @@ module.exports = {
 You can require Factory class and create new instance of Factory where you can set predefined options like:
 
 ```javascript
-// api/services/StorageService.js
-module.exports = require('sails-service-storage');
+// api/services/StorageFactory.js
+module.exports = require('sails-service-storage').Factory;
 
 // SomeController.js
-var AmazonStorage = new StorageService.Factory({
+var AmazonFactory = new StorageFactory({
+  type: 'amazon',
   accessKeyId: '1234',
   secretKey: '1234'
-}).create('amazon');
+});
+
+var AmazonStorage = AmazonFactory.create();
 
 module.exports = {
   upload: function(req, res) {
-    AmazonStorage.upload('some-file.png').then(res.ok).catch(res.serverError);
+    AmazonStorage
+      .upload('some-file.png')
+      .then(res.ok)
+      .catch(res.serverError);
   }
 };
 ```
