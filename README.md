@@ -11,30 +11,53 @@ Service for Sails framework with Storage features.
 
 ## Draft (how services should be done)
 
-Each service should expose Factory that can be instantiated with predefined features.
-Also service should export already instantiated Factory class.
+Each service should export Factory class that can be instantiated from developer-side.
+Also service should export already instantiated Factory class with empty params.
 
 ```javascript
-module.exports = new SomeFactory();
-module.exports.Factory = SomeFactory;
+var StorageFactory = require('./lib/StorageFactory');
+
+module.exports = new StorageFactory();
+module.exports.Factory = StorageFactory;
 ```
 
-When you create new instance of Factory, you can set predefined options like:
+And now let's take a look how it can be used from developer-side.
+
+**Simple Usage**
+
+We are using already instantiated Factory instance with no parameters.
 
 ```javascript
-var AmazonFactory = new SomeFactory('amazon');
+// api/services/StorageService.js
+module.exports = require('sails-service-storage');
+
+// StorageController.js
+module.exports = {
+  upload: function(req, res) {
+    StorageService.create('amazon', {some: 'options'}).upload('some-file.png').then(res.ok).catch(res.serverError);
+  }
+};
 ```
 
-And then you can use service methods:
+**More Advanced Usage**
+
+You can require Factory class and create new instance of Factory where you can set predefined options like:
 
 ```javascript
-new SomeFactory().create('amazon').upload('some-file.png').then(res.ok).catch(res.serverError);
+// api/services/StorageService.js
+module.exports = require('sails-service-storage');
 
-var AmazonFactory = new SomeFactory('amazon', {
-  ACCESS_KEY: '1234',
-  SECRET_KEY: '1234'
-});
-AmazonFactory.create().upload('some-file.png').then(res.ok).catch(res.serverError);
+// SomeController.js
+var AmazonStorage = new StorageService.Factory({
+  accessKeyId: '1234',
+  secretKey: '1234'
+}).create('amazon');
+
+module.exports = {
+  upload: function(req, res) {
+    AmazonStorage.upload('some-file.png').then(res.ok).catch(res.serverError);
+  }
+};
 ```
 
 ## Getting Started
