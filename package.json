@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "aws-sdk": "^2.1.28",
-    "bluebird": "^2.9.25"
+    "bluebird": "^2.9.25",
+    "gcloud": "^0.14.0"
   }
 }
