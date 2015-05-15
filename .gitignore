@@ -33,6 +33,3 @@ node_modules
 nbproject
 .idea
 .node_history
-
-# Transpiled code
-lib
