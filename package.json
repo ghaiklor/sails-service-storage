@@ -4,8 +4,7 @@
   "description": "Service for Sails framework with Storage features",
   "main": "index.js",
   "scripts": {
-    "test": "istanbul cover _mocha",
-    "prepublish": "npm run test"
+    "test": "istanbul cover _mocha"
   },
   "repository": {
     "type": "git",
