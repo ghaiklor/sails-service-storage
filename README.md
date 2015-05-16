@@ -28,40 +28,20 @@ Upload some file, i.e. to Amazon:
 
 ```javascript
 // api/controllers/SomeController.js
+var amazonStorage = StorageService('amazon', {
+  AccessKeyId: '1234',
+  SecretAccessKey: '1234',
+  Bucket: 'some-bucket'
+});
+
 module.exports = {
   index: function(req, res) {
-    StorageService
-      .create('amazon')
+    amazonStorage
       .upload('my-file-name.png')
       .then(res.ok)
       .catch(res.serverError);
   }
 };
-```
-
-## Advanced Usage
-
-When you requiring module, actually you'll get created Factory instance and pointer to Factory class for your advanced usage.
-
-```javascript
-var Storage = require('sails-service-storage');
-var StorageFactory = require('sails-service-storage').Factory;
-// or
-var StorageFactory = Storage.Factory;
-```
-
-Then you can use as already created Factory instance either create your own:
-
-```javascript
-var Storage = require('sails-service-storage');
-var StorageFactory = require('sails-service-storage').Factory;
-
-// Create instance for uploading to Amazon
-var AmazonUploader = Storage.create('amazon');
-
-// Or create your own Factory
-var MyOwnFactory = new StorageFactory();
-var AmazonUploaderFromMyFactory = MyOwnFactory.create('amazon');
 ```
 
 ## License
