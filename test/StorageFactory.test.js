@@ -1,6 +1,6 @@
 var assert = require('chai').assert;
 var AmazonStorage = require('../lib/AmazonStorage');
-var GCloudStorage = require('../lib/GCloudStorage');
+var GCloudStorage = require('../lib/GoogleCloudStorage');
 var LocalStorage = require('../lib/LocalStorage');
 var StorageFactory = require('../lib/StorageFactory');
 
@@ -16,7 +16,6 @@ describe('StorageFactory', function () {
 
   it('Should properly create some storage instance', function () {
     var storage = new StorageFactory();
-
     var amazonStorage = storage.create('amazon', {
       accessKeyId: '1234',
       secretAccessKey: '1234'
@@ -31,7 +30,7 @@ describe('StorageFactory', function () {
       secretAccessKey: '1234'
     });
 
-    var amazonStorage = storage.create('Amazon');
+    var amazonStorage = storage.create('amazon');
     assert.instanceOf(amazonStorage, AmazonStorage);
     assert.isFunction(amazonStorage.upload);
   });
