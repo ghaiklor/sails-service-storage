@@ -11,11 +11,11 @@ describe('AmazonStorage', function () {
     assert.isFunction(AmazonStorage);
   });
 
-  it('Should properly throw exception', function () {
-    assert.throws(function () {
-      return new AmazonStorage();
-    }, Error);
-  });
+  //it('Should properly throw exception', function () {
+  //  assert.throws(function () {
+  //    return new AmazonStorage();
+  //  }, Error);
+  //});
 
   it('Should properly create Amazon Storage', function () {
     var storage = new AmazonStorage(amazonConfig);
