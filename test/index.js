@@ -6,12 +6,13 @@ var StorageService = require('../');
 
 describe('Factory Method', function () {
   it('Should properly export', function () {
-    assert.isFunction(StorageService);
+    assert.isObject(StorageService);
+    assert.isFunction(StorageService.create);
   });
 
   it('Should properly create storage instances', function () {
-    assert.instanceOf(StorageService('Amazon'), AmazonStorage);
-    assert.instanceOf(StorageService('Google Cloud'), GoogleCloudStorage);
-    assert.instanceOf(StorageService('Local'), LocalStorage);
+    assert.instanceOf(StorageService.create('Amazon'), AmazonStorage);
+    assert.instanceOf(StorageService.create('Google Cloud'), GoogleCloudStorage);
+    assert.instanceOf(StorageService.create('Local'), LocalStorage);
   });
 });
