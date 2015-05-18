@@ -9,6 +9,5 @@ describe('AmazonStorage', function () {
   it('Should properly create Amazon Storage', function () {
     var storage = new AmazonStorage();
     assert.instanceOf(storage, AmazonStorage);
-    assert.isFunction(storage.upload);
   });
 });
