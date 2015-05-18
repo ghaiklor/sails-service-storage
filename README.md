@@ -4,10 +4,9 @@
 
 Service for Sails framework with Storage features.
 
-> Stability: 1 - Experimental.
-> This module was introduced recently, and may change or be removed in future versions.
-> Please try it out and provide feedback.
-> If it addresses a use-case that is important to you, tell the core developer.
+> Stability: 2 - Unstable.
+> The API is in the process of settling, but has not yet had sufficient real-world testing to be considered stable.
+> Backwards-compatibility will be maintained if reasonable.
 
 ## Getting Started
 
@@ -28,16 +27,18 @@ Upload some file, i.e. to Amazon:
 
 ```javascript
 // api/controllers/SomeController.js
-var amazonStorage = StorageService('amazon', {
-  AccessKeyId: '1234',
-  SecretAccessKey: '1234',
-  Bucket: 'some-bucket'
+var amazonStorage = StorageService.create('amazon', {
+  accessKeyId: '1234',
+  secretAccessKey: '1234'
 });
 
 module.exports = {
   index: function(req, res) {
     amazonStorage
-      .upload('my-file-name.png')
+      .upload({
+        Bucket: 'some-bucket',
+        Body: fs.readFileSync('some-file.png')
+      })
       .then(res.ok)
       .catch(res.serverError);
   }
