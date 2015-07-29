@@ -2,47 +2,75 @@
 
 ![Build Status](https://img.shields.io/travis/ghaiklor/sails-service-storage.svg) ![Coverage](https://img.shields.io/coveralls/ghaiklor/sails-service-storage.svg) ![Downloads](https://img.shields.io/npm/dm/sails-service-storage.svg) ![npm version](https://img.shields.io/npm/v/sails-service-storage.svg) ![dependencies](https://img.shields.io/david/ghaiklor/sails-service-storage.svg) ![dev dependencies](https://img.shields.io/david/dev/ghaiklor/sails-service-storage.svg) ![License](https://img.shields.io/npm/l/sails-service-storage.svg)
 
-Service for Sails framework with Storage features.
+Service for Sails framework with storage features.
 
-> Stability: 2 - Unstable.
-> The API is in the process of settling, but has not yet had sufficient real-world testing to be considered stable.
-> Backwards-compatibility will be maintained if reasonable.
+## List of supported storage
+
+- Amazon S3
+- Local
 
 ## Getting Started
 
-Install module as dependency:
+Install this module.
 
 ```shell
-npm install --save sails-service-storage
+npm install sails-service-storage
 ```
 
-Require installed module to your service:
+Then require it in your service.
 
 ```javascript
 // api/services/StorageService.js
 module.exports = require('sails-service-storage');
 ```
 
-Upload some file, i.e. to Amazon:
+That's it, you can create storage instances for your needs in your project.
 
 ```javascript
-// api/controllers/SomeController.js
-var amazonStorage = StorageService.create('amazon', {
-  accessKeyId: '1234',
-  secretAccessKey: '1234'
-});
+// api/controllers/StorageController.js
+var amazon = StorageService.create('amazon-s3');
 
 module.exports = {
-  index: function(req, res) {
-    amazonStorage
-      .upload({
-        Bucket: 'some-bucket',
-        Body: fs.readFileSync('some-file.png')
-      })
+  upload: function(req, res) {
+    amazon
+      .upload('<PATH_TO_FILE_OR_STREAM>')
       .then(res.ok)
       .catch(res.serverError);
   }
 };
+```
+
+## Configuration
+
+You can save any value what you want in your configuration object.
+
+## API
+
+Each of storage instances has following methods:
+
+### upload()
+
+Upload specified file to storage
+
+### download()
+
+Download specified file from storage
+
+### delete()
+
+Delete specified file from storage
+
+## Examples
+
+### AmazonS3Storage
+
+```javascript
+var amazon = StorageService.create('amazon-s3');
+
+amazon
+  .upload('<FILE>')
+  .then(console.log.bind(console))
+  .catch(console.error.bind(console));
 ```
 
 ## License
