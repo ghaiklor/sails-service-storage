@@ -7,7 +7,6 @@ Service for Sails framework with storage features.
 ## List of supported storage
 
 - Amazon S3
-- Local
 
 ## Getting Started
 
@@ -28,7 +27,7 @@ That's it, you can create storage instances for your needs in your project.
 
 ```javascript
 // api/controllers/StorageController.js
-var amazon = StorageService.create('amazon-s3');
+var amazon = StorageService.create('amazon');
 
 module.exports = {
   upload: function(req, res) {
