@@ -32,7 +32,7 @@ var amazon = StorageService.create('amazon');
 module.exports = {
   upload: function(req, res) {
     amazon
-      .upload('<PATH_TO_FILE_OR_STREAM>')
+      .upload('<SOURCE>', '<BUCKET>:<KEY>')
       .then(res.ok)
       .catch(res.serverError);
   }
@@ -41,33 +41,51 @@ module.exports = {
 
 ## Configuration
 
-You can save any value what you want in your configuration object.
+Configuration object has few properties to use:
+
+`config.provider` - Configure storage provider (specific for each of services, take a look at examples for more info)
 
 ## API
 
 Each of storage instances has following methods:
 
-### upload()
+### upload(source, destination, [config])
 
-Upload specified file to storage
+Upload specified file to storage.
 
-### download()
+`source` - {String|Buffer|Stream} Source file that need to upload to storage
 
-Download specified file from storage
+`destination` - {String} Destination where file should be uploaded (Bucket:Key, local path, etc...)
 
-### delete()
+`config` - {Object} Specific config for each of provider. This config will be passed directly into each of providers.
 
-Delete specified file from storage
+Return Promise.
+
+### download(source)
+
+Download specified file from storage.
+
+`source` - {String} Which file you want to download from storage.
+
+Return Promise.
+
+### remove(source)
+
+Remove specified file from storage.
+
+`source` - {String} Which file you want to remove from storage.
+
+Return Promise.
 
 ## Examples
 
-### AmazonS3Storage
+### AmazonStorage
 
 ```javascript
-var amazon = StorageService.create('amazon-s3');
+var amazon = StorageService.create('amazon');
 
 amazon
-  .upload('<FILE>')
+  .upload('<FILE>', '<BUCKET:KEY>')
   .then(console.log.bind(console))
   .catch(console.error.bind(console));
 ```
