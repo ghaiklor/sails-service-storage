@@ -59,7 +59,7 @@ Each of storage instances has following methods:
 
 Upload specified file to storage. Returns Promise.
 
-`source` - {String|Buffer|Stream} Source file that need to upload to storage;
+`source` - {String|Buffer} Source file that need to upload to storage;
 
 `destination` - {String} Destination where file should be uploaded (Bucket:Key, local path, etc...)
 
