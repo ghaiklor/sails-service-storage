@@ -60,17 +60,21 @@ Upload specified file to storage. Returns Promise.
 
 `config` - {Object} Specific config for each of provider. This config will be passed directly into each of providers.
 
-### download(source)
+### download(source, [config])
 
 Download specified file from storage. Returns Promise.
 
 `source` - {String} Which file you want to download from storage.
 
-### remove(source)
+`config` - {Object} Additional configuration object for specific SDK.
+
+### remove(source, [config])
 
 Remove specified file from storage. Returns Promise.
 
 `source` - {String} Which file you want to remove from storage.
+
+`config` - {Object} Additional configuration object for specific SDK.
 
 ## Examples
 
