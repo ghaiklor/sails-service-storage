@@ -28,8 +28,10 @@ That's it, you can create storage instances for your needs in your project.
 ```javascript
 // api/controllers/StorageController.js
 var amazon = StorageService.create('amazon', {
-  accessKeyId: '<AMAZON_ACCESS_KEY_ID>',
-  secretAccessKey: '<AMAZON_SECRET_ACCESS_KEY>'
+  provider: {
+    accessKeyId: '<AMAZON_ACCESS_KEY_ID>',
+    secretAccessKey: '<AMAZON_SECRET_ACCESS_KEY>'
+  }
 });
 
 module.exports = {
@@ -44,7 +46,10 @@ module.exports = {
 
 ## Configuration
 
-When you instantiate storage service `StorageService.create(type, config)` you can pass only provider configuration in `config`.
+When you instantiate storage service `StorageService.create(type, config)` you can pass `provider` object.
+And all other free space you can use for your needs.
+
+`config.provider` - {Object} Configuration object for storage provider
 
 ## API
 
@@ -83,8 +88,10 @@ Remove specified file from storage. Returns Promise.
 ```javascript
 var fs = require('fs');
 var amazon = StorageService.create('amazon', {
-  accessKeyId: '<AMAZON_ACCESS_KEY_ID>',
-  secretAccessKey: '<AMAZON_SECRET_ACCESS_KEY>'
+  provider: {
+    accessKeyId: '<AMAZON_ACCESS_KEY_ID>',
+    secretAccessKey: '<AMAZON_SECRET_ACCESS_KEY>'
+  }
 });
 
 amazon
@@ -97,8 +104,10 @@ amazon
 
 ```javascript
 var amazon = StorageService.create('amazon', {
-  accessKeyId: '<AMAZON_ACCESS_KEY_ID>',
-  secretAccessKey: '<AMAZON_SECRET_ACCESS_KEY>'
+  provider: {
+    accessKeyId: '<AMAZON_ACCESS_KEY_ID>',
+    secretAccessKey: '<AMAZON_SECRET_ACCESS_KEY>'
+  }
 });
 
 amazon
@@ -111,8 +120,10 @@ amazon
 
 ```javascript
 var amazon = StorageService.create('amazon', {
-  accessKeyId: '<AMAZON_ACCESS_KEY_ID>',
-  secretAccessKey: '<AMAZON_SECRET_ACCESS_KEY>'
+  provider: {
+    accessKeyId: '<AMAZON_ACCESS_KEY_ID>',
+    secretAccessKey: '<AMAZON_SECRET_ACCESS_KEY>'
+  }
 });
 
 amazon
