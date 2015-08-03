@@ -2,7 +2,7 @@ var assert = require('chai').assert;
 var StorageService = require('../');
 var AmazonStorage = StorageService.AmazonStorage;
 
-describe('Factory Method', function () {
+describe('StorageService', function () {
   it('Should properly export', function () {
     assert.isObject(StorageService);
     assert.isFunction(StorageService.create);
