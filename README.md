@@ -27,7 +27,10 @@ That's it, you can create storage instances for your needs in your project.
 
 ```javascript
 // api/controllers/StorageController.js
-var amazon = StorageService.create('amazon');
+var amazon = StorageService.create('amazon', {
+  accessKeyId: '<AMAZON_ACCESS_KEY_ID>',
+  secretAccessKey: '<AMAZON_SECRET_ACCESS_KEY>'
+});
 
 module.exports = {
   upload: function(req, res) {
@@ -41,9 +44,7 @@ module.exports = {
 
 ## Configuration
 
-Configuration object has few properties to use:
-
-`config.provider` - Configure storage provider (specific for each of services, take a look at examples for more info)
+When you instantiate storage service `StorageService.create(type, config)` you can pass only provider configuration in `config`.
 
 ## API
 
@@ -51,41 +52,67 @@ Each of storage instances has following methods:
 
 ### upload(source, destination, [config])
 
-Upload specified file to storage.
+Upload specified file to storage. Returns Promise.
 
-`source` - {String|Buffer|Stream} Source file that need to upload to storage
+`source` - {String|Buffer|Stream} Source file that need to upload to storage;
 
 `destination` - {String} Destination where file should be uploaded (Bucket:Key, local path, etc...)
 
 `config` - {Object} Specific config for each of provider. This config will be passed directly into each of providers.
 
-Return Promise.
-
 ### download(source)
 
-Download specified file from storage.
+Download specified file from storage. Returns Promise.
 
 `source` - {String} Which file you want to download from storage.
 
-Return Promise.
-
 ### remove(source)
 
-Remove specified file from storage.
+Remove specified file from storage. Returns Promise.
 
 `source` - {String} Which file you want to remove from storage.
 
-Return Promise.
-
 ## Examples
 
-### AmazonStorage
+### AmazonStorage (upload)
 
 ```javascript
-var amazon = StorageService.create('amazon');
+var fs = require('fs');
+var amazon = StorageService.create('amazon', {
+  accessKeyId: '<AMAZON_ACCESS_KEY_ID>',
+  secretAccessKey: '<AMAZON_SECRET_ACCESS_KEY>'
+});
 
 amazon
-  .upload('<FILE>', '<BUCKET:KEY>')
+  .upload(fs.readFileSync('<FILE>'), 'MY_BUCKET:KEY')
+  .then(console.log.bind(console))
+  .catch(console.error.bind(console));
+```
+
+### AmazonStorage (download)
+
+```javascript
+var amazon = StorageService.create('amazon', {
+  accessKeyId: '<AMAZON_ACCESS_KEY_ID>',
+  secretAccessKey: '<AMAZON_SECRET_ACCESS_KEY>'
+});
+
+amazon
+  .download('MY_BUCKET:KEY')
+  .then(console.log.bind(console))
+  .catch(console.error.bind(console));
+```
+
+### AmazonStorage (remove)
+
+```javascript
+var amazon = StorageService.create('amazon', {
+  accessKeyId: '<AMAZON_ACCESS_KEY_ID>',
+  secretAccessKey: '<AMAZON_SECRET_ACCESS_KEY>'
+});
+
+amazon
+  .remove('MY_BUCKET:KEY')
   .then(console.log.bind(console))
   .catch(console.error.bind(console));
 ```
