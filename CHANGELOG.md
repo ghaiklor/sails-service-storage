@@ -1,5 +1,7 @@
 # Changelog
 
+## Edge version
+
 ## 2.0.0
 
 - Implement AmazonStorage;
