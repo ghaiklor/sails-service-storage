@@ -1,6 +1,8 @@
 # Changelog
 
-## Edge version
+## 2.1.0
+
+- Implement LocalStorage;
 
 ## 2.0.0
 
