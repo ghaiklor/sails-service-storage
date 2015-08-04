@@ -7,6 +7,7 @@ Service for Sails framework with storage features.
 ## List of supported storage
 
 - Amazon S3
+- Local Storage
 
 ## Getting Started
 
@@ -130,6 +131,21 @@ amazon
   .remove('MY_BUCKET:KEY')
   .then(console.log.bind(console))
   .catch(console.error.bind(console));
+```
+
+### LocalStorage
+
+```javascript
+var local = StorageService.create('local', {
+  provider: {
+    uploadsDir: path.resolve(__dirname, '../uploads')
+  }
+});
+
+local
+  .upload('./my-file.png', 'destination-file-name.png')
+  .then(console.log.bind(console))
+  .catch(console.error.bind(console))
 ```
 
 ## License
