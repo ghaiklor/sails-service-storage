@@ -1,58 +1,47 @@
-var _ = require('lodash');
+import _ from 'lodash';
 
-/**
- * Create base instance for storage service
- * @param {Object} [_config]
- * @constructor
- */
-function BaseStorage(_config) {
-  this._config = {};
+export default class BaseStorage {
+  constructor(config) {
+    this._config = {};
 
-  _.forOwn(_config, function (value, key) {
-    this.set(key, value);
-  }.bind(this));
+    _.assign(this._config, config);
+  }
+
+  /**
+   * Get configuration value
+   * @param {String} [path]
+   * @returns {*}
+   */
+  get(path) {
+    return typeof path === 'undefined' ? this._config : _.get(this._config, path);
+  }
+
+  /**
+   * Set configuration value
+   * @param {String} path
+   * @param {*} value
+   * @returns {BaseStorage}
+   */
+  set(path, value) {
+    _.set(this._config, path, value);
+    return this;
+  }
+
+  /**
+   * Get storage provider
+   * @returns {*}
+   */
+  getProvider() {
+    return this._provider;
+  }
+
+  /**
+   * Set new provider to this storage
+   * @param {*} provider
+   * @returns {BaseStorage}
+   */
+  setProvider(provider) {
+    this._provider = provider;
+    return this;
+  }
 }
-
-/**
- * Get configuration value
- * @param {String} [path]
- * @returns {*}
- */
-BaseStorage.prototype.get = function (path) {
-  return typeof path === 'undefined' ? this._config : _.get(this._config, path);
-};
-
-/**
- * Set configuration value
- * @param {String} path
- * @param {*} value
- * @returns {BaseStorage}
- */
-BaseStorage.prototype.set = function (path, value) {
-  _.set(this._config, path, value);
-  return this;
-};
-
-/**
- * Get storage provider
- * @returns {*}
- */
-BaseStorage.prototype.getProvider = function () {
-  return this._provider;
-};
-
-/**
- * Set new provider to this storage
- * @param {*} provider
- * @returns {BaseStorage}
- */
-BaseStorage.prototype.setProvider = function (provider) {
-  this._provider = provider;
-  return this;
-};
-
-BaseStorage.prototype.upload = _;
-BaseStorage.prototype.download = _;
-BaseStorage.prototype.remove = _;
-
-module.exports = BaseStorage;
