@@ -1,28 +1,26 @@
-var fs = require('fs');
-var assert = require('chai').assert;
-var sinon = require('sinon');
-var AmazonStorage = require('../lib/AmazonStorage');
+import fs from 'fs';
+import { assert } from 'chai';
+import sinon from 'sinon';
+import AmazonStorage from '../../src/AmazonStorage';
 
-describe('AmazonStorage', function () {
-  it('Should properly export Amazon Storage Service', function () {
+describe('AmazonStorage', () => {
+  it('Should properly export Amazon Storage Service', () => {
     assert.isFunction(AmazonStorage);
   });
 
-  it('Should properly create Amazon Storage', function () {
-    var storage = new AmazonStorage();
+  it('Should properly create Amazon Storage', () => {
+    let storage = new AmazonStorage();
     assert.instanceOf(storage, AmazonStorage);
   });
 
-  it('Should properly upload file', function (done) {
-    var storage = new AmazonStorage();
+  it('Should properly upload file', done => {
+    let storage = new AmazonStorage();
 
-    sinon.stub(storage.getProvider(), 'putObject', function (config, cb) {
-      cb(null, 'RESULT');
-    });
+    sinon.stub(storage.getProvider(), 'putObject', (config, cb) => cb(null, 'RESULT'));
 
     storage
       .upload(new Buffer('test'), 'BUCKET:KEY')
-      .then(function (result) {
+      .then(result => {
         assert.equal(result, 'RESULT');
         assert.ok(storage.getProvider().putObject.calledOnce);
         assert.deepEqual(storage.getProvider().putObject.getCall(0).args[0], {
@@ -39,18 +37,16 @@ describe('AmazonStorage', function () {
       .catch(done);
   });
 
-  it('Should properly upload without specifying bucket in .upload()', function (done) {
-    var storage = new AmazonStorage({
+  it('Should properly upload without specifying bucket in .upload()', done => {
+    let storage = new AmazonStorage({
       bucket: 'BUCKET'
     });
 
-    sinon.stub(storage.getProvider(), 'putObject', function (config, cb) {
-      cb(null, 'RESULT');
-    });
+    sinon.stub(storage.getProvider(), 'putObject', (config, cb) => cb(null, 'RESULT'));
 
     storage
       .upload(new Buffer('test'), 'KEY')
-      .then(function (result) {
+      .then(result => {
         assert.equal(result, 'RESULT');
         assert.ok(storage.getProvider().putObject.calledOnce);
         assert.deepEqual(storage.getProvider().putObject.getCall(0).args[0], {
@@ -67,16 +63,14 @@ describe('AmazonStorage', function () {
       .catch(done);
   });
 
-  it('Should properly upload source as a path to file', function (done) {
-    var storage = new AmazonStorage();
+  it('Should properly upload source as a path to file', done => {
+    let storage = new AmazonStorage();
 
-    sinon.stub(storage.getProvider(), 'putObject', function (config, cb) {
-      cb(null, 'RESULT');
-    });
+    sinon.stub(storage.getProvider(), 'putObject', (config, cb) => cb(null, 'RESULT'));
 
     storage
       .upload('.editorconfig', 'BUCKET:KEY')
-      .then(function (result) {
+      .then(result => {
         assert.equal(result, 'RESULT');
         assert.ok(storage.getProvider().putObject.calledOnce);
         assert.deepEqual(storage.getProvider().putObject.getCall(0).args[0], {
@@ -93,18 +87,16 @@ describe('AmazonStorage', function () {
       .catch(done);
   });
 
-  it('Should properly mixin other config in upload', function (done) {
-    var storage = new AmazonStorage();
+  it('Should properly mixin other config in upload', done => {
+    let storage = new AmazonStorage();
 
-    sinon.stub(storage.getProvider(), 'putObject', function (config, cb) {
-      cb(null, 'RESULT');
-    });
+    sinon.stub(storage.getProvider(), 'putObject', (config, cb) => cb(null, 'RESULT'));
 
     storage
       .upload('.editorconfig', 'BUCKET:KEY', {
         ACL: 'public-read'
       })
-      .then(function (result) {
+      .then(result => {
         assert.equal(result, 'RESULT');
         assert.ok(storage.getProvider().putObject.calledOnce);
         assert.deepEqual(storage.getProvider().putObject.getCall(0).args[0], {
@@ -122,25 +114,21 @@ describe('AmazonStorage', function () {
       .catch(done);
   });
 
-  it('Should properly throw error if upload unknown type', function () {
-    var storage = new AmazonStorage();
+  it('Should properly throw error if upload unknown type', () => {
+    let storage = new AmazonStorage();
 
-    assert.throws(function () {
-      storage.upload(true, 'BUCKET:KEY');
-    }, Error);
+    assert.throws(() => storage.upload(true, 'BUCKET:KEY'), Error);
   });
 
-  it('Should properly reject on file uploading', function (done) {
-    var storage = new AmazonStorage();
+  it('Should properly reject on file uploading', done => {
+    let storage = new AmazonStorage();
 
-    sinon.stub(storage.getProvider(), 'putObject', function (config, cb) {
-      cb('ERROR');
-    });
+    sinon.stub(storage.getProvider(), 'putObject', (config, cb) => cb('ERROR'));
 
     storage
       .upload(new Buffer('test'), 'BUCKET:KEY')
       .then(done)
-      .catch(function (error) {
+      .catch(error => {
         assert.equal(error, 'ERROR');
         assert.ok(storage.getProvider().putObject.calledOnce);
         assert.deepEqual(storage.getProvider().putObject.getCall(0).args[0], {
@@ -156,16 +144,14 @@ describe('AmazonStorage', function () {
       });
   });
 
-  it('Should properly download file', function (done) {
-    var storage = new AmazonStorage();
+  it('Should properly download file', done => {
+    let storage = new AmazonStorage();
 
-    sinon.stub(storage.getProvider(), 'getObject', function (config, cb) {
-      cb(null, 'OBJECT')
-    });
+    sinon.stub(storage.getProvider(), 'getObject', (config, cb) => cb(null, 'OBJECT'));
 
     storage
       .download('BUCKET:KEY')
-      .then(function (result) {
+      .then(result => {
         assert.equal(result, 'OBJECT');
         assert.ok(storage.getProvider().getObject.calledOnce);
         assert.deepEqual(storage.getProvider().getObject.getCall(0).args[0], {
@@ -181,17 +167,15 @@ describe('AmazonStorage', function () {
       .catch(done);
   });
 
-  it('Should properly reject on downloading file', function (done) {
-    var storage = new AmazonStorage();
+  it('Should properly reject on downloading file', done => {
+    let storage = new AmazonStorage();
 
-    sinon.stub(storage.getProvider(), 'getObject', function (config, cb) {
-      cb('ERROR')
-    });
+    sinon.stub(storage.getProvider(), 'getObject', (config, cb) => cb('ERROR'));
 
     storage
       .download('BUCKET:KEY')
       .then(done)
-      .catch(function (error) {
+      .catch(error => {
         assert.equal(error, 'ERROR');
         assert.ok(storage.getProvider().getObject.calledOnce);
         assert.deepEqual(storage.getProvider().getObject.getCall(0).args[0], {
@@ -206,16 +190,14 @@ describe('AmazonStorage', function () {
       });
   });
 
-  it('Should properly remove file', function (done) {
-    var storage = new AmazonStorage();
+  it('Should properly remove file', done => {
+    let storage = new AmazonStorage();
 
-    sinon.stub(storage.getProvider(), 'deleteObject', function (config, cb) {
-      cb(null, 'OBJECT')
-    });
+    sinon.stub(storage.getProvider(), 'deleteObject', (config, cb) => cb(null, 'OBJECT'));
 
     storage
       .remove('BUCKET:KEY')
-      .then(function (result) {
+      .then(result => {
         assert.equal(result, 'OBJECT');
         assert.ok(storage.getProvider().deleteObject.calledOnce);
         assert.deepEqual(storage.getProvider().deleteObject.getCall(0).args[0], {
@@ -231,17 +213,15 @@ describe('AmazonStorage', function () {
       .catch(done);
   });
 
-  it('Should properly reject on removing file', function (done) {
-    var storage = new AmazonStorage();
+  it('Should properly reject on removing file', done => {
+    let storage = new AmazonStorage();
 
-    sinon.stub(storage.getProvider(), 'deleteObject', function (config, cb) {
-      cb('ERROR')
-    });
+    sinon.stub(storage.getProvider(), 'deleteObject', (config, cb) => cb('ERROR'));
 
     storage
       .remove('BUCKET:KEY')
       .then(done)
-      .catch(function (error) {
+      .catch(error => {
         assert.equal(error, 'ERROR');
         assert.ok(storage.getProvider().deleteObject.calledOnce);
         assert.deepEqual(storage.getProvider().deleteObject.getCall(0).args[0], {

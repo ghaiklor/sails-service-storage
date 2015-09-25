@@ -1,26 +1,26 @@
-var fs = require('fs');
-var path = require('path');
-var assert = require('chai').assert;
-var sinon = require('sinon');
-var LocalStorage = require('../lib/LocalStorage');
+import fs from 'fs';
+import path from 'path';
+import { assert } from 'chai';
+import sinon from 'sinon';
+import LocalStorage from '../../src/LocalStorage';
 
-var PROVIDER_CONFIG = {
+const PROVIDER_CONFIG = {
   provider: {
     uploadsDir: path.resolve(__dirname, '../uploads')
   }
 };
 
-describe('LocalStorage', function () {
-  it('Should properly export', function () {
+describe('LocalStorage', () => {
+  it('Should properly export', () => {
     assert.isFunction(LocalStorage);
   });
 
-  it('Should properly upload file as a path to it', function (done) {
-    var storage = new LocalStorage(PROVIDER_CONFIG);
+  it('Should properly upload file as a path to it', done => {
+    let storage = new LocalStorage(PROVIDER_CONFIG);
 
     storage
       .upload('./.editorconfig', '.editorconfig_copy')
-      .then(function () {
+      .then(() => {
         assert.ok(fs.existsSync('./uploads/.editorconfig_copy'));
         assert.deepEqual(fs.readFileSync('./.editorconfig'), fs.readFileSync('./uploads/.editorconfig_copy'));
         done();
@@ -28,12 +28,12 @@ describe('LocalStorage', function () {
       .catch(done)
   });
 
-  it('Should properly upload file as a Buffer', function (done) {
-    var storage = new LocalStorage(PROVIDER_CONFIG);
+  it('Should properly upload file as a Buffer', done => {
+    let storage = new LocalStorage(PROVIDER_CONFIG);
 
     storage
       .upload(fs.readFileSync('./.editorconfig'), '.editorconfig_copy_2')
-      .then(function () {
+      .then(() => {
         assert.ok(fs.existsSync('./uploads/.editorconfig_copy_2'));
         assert.deepEqual(fs.readFileSync('./.editorconfig'), fs.readFileSync('./uploads/.editorconfig_copy_2'));
         done();
@@ -41,17 +41,15 @@ describe('LocalStorage', function () {
       .catch(done)
   });
 
-  it('Should properly reject on uploading file', function (done) {
-    var storage = new LocalStorage(PROVIDER_CONFIG);
+  it('Should properly reject on uploading file', done => {
+    let storage = new LocalStorage(PROVIDER_CONFIG);
 
-    sinon.stub(storage.getProvider(), 'writeFile', function (file, data, cb) {
-      cb('ERROR');
-    });
+    sinon.stub(storage.getProvider(), 'writeFile', (file, data, cb) => cb('ERROR'));
 
     storage
       .upload('./.editorconfig', '.editorconfig_copy')
       .then(done)
-      .catch(function (error) {
+      .catch(error => {
         assert.equal(error, 'ERROR');
         assert.ok(storage.getProvider().writeFile.calledOnce);
 
@@ -61,37 +59,33 @@ describe('LocalStorage', function () {
       });
   });
 
-  it('Should properly throw error on uploading unknown file type', function () {
-    var storage = new LocalStorage(PROVIDER_CONFIG);
+  it('Should properly throw error on uploading unknown file type', () => {
+    let storage = new LocalStorage(PROVIDER_CONFIG);
 
-    assert.throws(function () {
-      storage.upload(true, '.editorconfig_copy')
-    }, Error);
+    assert.throws(() => storage.upload(true, '.editorconfig_copy'), Error);
   });
 
-  it('Should properly download file', function (done) {
-    var storage = new LocalStorage(PROVIDER_CONFIG);
+  it('Should properly download file', done => {
+    let storage = new LocalStorage(PROVIDER_CONFIG);
 
     storage
       .download('.editorconfig_copy')
-      .then(function (result) {
+      .then(result => {
         assert.instanceOf(result, Buffer);
         done();
       })
       .catch(done);
   });
 
-  it('Should properly reject on download file', function (done) {
-    var storage = new LocalStorage(PROVIDER_CONFIG);
+  it('Should properly reject on download file', done => {
+    let storage = new LocalStorage(PROVIDER_CONFIG);
 
-    sinon.stub(storage.getProvider(), 'readFile', function (source, cb) {
-      cb('ERROR');
-    });
+    sinon.stub(storage.getProvider(), 'readFile', (source, cb) => cb('ERROR'));
 
     storage
       .download('.editorconfig_copy')
       .then(done)
-      .catch(function (error) {
+      .catch(error => {
         assert.equal(error, 'ERROR');
         assert.ok(storage.getProvider().readFile.calledOnce);
 
@@ -101,12 +95,12 @@ describe('LocalStorage', function () {
       });
   });
 
-  it('Should properly remove file', function (done) {
-    var storage = new LocalStorage(PROVIDER_CONFIG);
+  it('Should properly remove file', done => {
+    let storage = new LocalStorage(PROVIDER_CONFIG);
 
     storage
       .remove('.editorconfig_copy')
-      .then(function () {
+      .then(() => {
         assert.notOk(fs.existsSync('./uploads/.editorconfig_copy'));
         assert.ok(fs.existsSync('./uploads/.editorconfig_copy_2'));
         done();
@@ -114,17 +108,15 @@ describe('LocalStorage', function () {
       .catch(done);
   });
 
-  it('Should properly reject on remove file', function (done) {
-    var storage = new LocalStorage(PROVIDER_CONFIG);
+  it('Should properly reject on remove file', done => {
+    let storage = new LocalStorage(PROVIDER_CONFIG);
 
-    sinon.stub(storage.getProvider(), 'unlink', function (path, cb) {
-      cb('ERROR');
-    });
+    sinon.stub(storage.getProvider(), 'unlink', (path, cb) => cb('ERROR'));
 
     storage
       .remove('.editorconfig_copy')
       .then(done)
-      .catch(function (error) {
+      .catch(error => {
         assert.equal(error, 'ERROR');
         assert.ok(storage.getProvider().unlink.calledOnce);
 

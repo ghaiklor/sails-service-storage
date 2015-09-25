@@ -1,20 +1,13 @@
-var assert = require('chai').assert;
-var BaseStorage = require('../lib/BaseStorage');
+import { assert } from 'chai';
+import BaseStorage from '../../src/BaseStorage';
 
-describe('BaseStorage', function () {
-  it('Should properly export', function () {
+describe('BaseStorage', () => {
+  it('Should properly export', () => {
     assert.isFunction(BaseStorage);
-    assert.isFunction(BaseStorage.prototype.get);
-    assert.isFunction(BaseStorage.prototype.set);
-    assert.isFunction(BaseStorage.prototype.getProvider);
-    assert.isFunction(BaseStorage.prototype.setProvider);
-    assert.isFunction(BaseStorage.prototype.upload);
-    assert.isFunction(BaseStorage.prototype.download);
-    assert.isFunction(BaseStorage.prototype.remove);
   });
 
-  it('Should properly make objects configurable', function () {
-    var storage = new BaseStorage();
+  it('Should properly make objects configurable', () => {
+    let storage = new BaseStorage();
 
     assert.notOk(storage.get('foo'));
     assert.instanceOf(storage.set('foo', 'bar'), BaseStorage);
@@ -25,8 +18,8 @@ describe('BaseStorage', function () {
     assert.equal(storage.get('foo'), 'bar');
   });
 
-  it('Should properly create storage with pre-defined config', function () {
-    var storage = new BaseStorage({
+  it('Should properly create storage with pre-defined config', () => {
+    let storage = new BaseStorage({
       foo: 'bar',
       obj: {
         foo: 'bar'
@@ -39,8 +32,8 @@ describe('BaseStorage', function () {
     assert.notOk(storage.get('NOT_EXISTS'));
   });
 
-  it('Should properly get/set provider', function () {
-    var storage = new BaseStorage();
+  it('Should properly get/set provider', () => {
+    let storage = new BaseStorage();
 
     assert.notOk(storage.getProvider());
     assert.instanceOf(storage.setProvider('PROVIDER'), BaseStorage);
