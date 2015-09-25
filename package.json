@@ -2,7 +2,7 @@
   "name": "sails-service-storage",
   "version": "2.1.1",
   "description": "Service for Sails framework with Storage features",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
     "test": "istanbul cover _mocha"
   },
