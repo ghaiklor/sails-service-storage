@@ -31,8 +31,10 @@ Then require it in your service and create storage instance.
 import StorageService from 'sails-service-storage';
 
 export default StorageService('amazon', {
-  accessKeyId: '',
-  secretAccessKey: ''
+  provider: {
+    accessKeyId: '',
+    secretAccessKey: ''
+  },
 });
 
 // api/controllers/StorageController.js
