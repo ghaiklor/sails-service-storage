@@ -5,6 +5,7 @@
 - Migration from ES5 to ES6 syntax;
 - Remove `create()` method from StorageService. StorageService is a function now that you can call `StorageService('amazon')`;
 - Fix issue with LocalStorage that didn't accessible via StorageService;
+- Move `provider.uploadsDir` to `uploads` in configuration object for LocalStorage;
 
 ## 2.1.1
 
