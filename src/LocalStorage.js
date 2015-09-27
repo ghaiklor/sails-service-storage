@@ -8,7 +8,7 @@ export default class LocalStorage extends BaseStorage {
     super(...args);
 
     this.setProvider(fs);
-    this.createUploadsFolder(this.get('uploads'));
+    this.createUploadsFolder(this.get('provider.uploads'));
   }
 
   /**
@@ -51,7 +51,7 @@ export default class LocalStorage extends BaseStorage {
    */
   upload(_source, _destination, _config) {
     let source = this.parseSourceFile(_source);
-    let destination = path.resolve(this.get('uploads'), _destination);
+    let destination = path.resolve(this.get('provider.uploads'), _destination);
 
     return new Promise((resolve, reject) => {
       this.getProvider().writeFile(destination, source, error => error ? reject(error) : resolve());
@@ -65,7 +65,7 @@ export default class LocalStorage extends BaseStorage {
    * @returns {Promise}
    */
   download(_source, _config) {
-    let source = path.resolve(this.get('uploads'), _source);
+    let source = path.resolve(this.get('provider.uploads'), _source);
 
     return new Promise((resolve, reject) => {
       this.getProvider().readFile(source, (error, data) => error ? reject(error) : resolve(data));
@@ -79,7 +79,7 @@ export default class LocalStorage extends BaseStorage {
    * @returns {Promise}
    */
   remove(_source, _config) {
-    var source = path.resolve(this.get('uploads'), _source);
+    var source = path.resolve(this.get('provider.uploads'), _source);
 
     return new Promise((resolve, reject) => {
       this.getProvider().unlink(source, error => error ? reject(error) : resolve());

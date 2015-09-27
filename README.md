@@ -140,7 +140,9 @@ amazon
 
 ```javascript
 let local = StorageService('local', {
-  uploads: path.resolve(__dirname, '../uploads')
+  provider: {
+    uploads: path.resolve(__dirname, '../uploads')
+  }
 });
 
 local
