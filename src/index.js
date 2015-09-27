@@ -16,6 +16,6 @@ export default function (type, config) {
   if (storage[type.toLowerCase()] instanceof Function) {
     return new storage[type.toLowerCase()](config);
   } else {
-    throw new Error('Unrecognized storage type -> ' + type);
+    throw new Error('Unrecognized type -> ' + type);
   }
 }
