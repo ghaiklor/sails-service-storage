@@ -16,7 +16,7 @@ export default class AmazonStorage extends BaseStorage {
    * @returns {Buffer}
    * @private
    */
-  parseFile(source) {
+  parseSourceFile(source) {
     let buffer;
 
     if (typeof source === 'string') {
@@ -55,7 +55,7 @@ export default class AmazonStorage extends BaseStorage {
    * @returns {Promise}
    */
   upload(_source, _destination, _config) {
-    let source = this.parseFile(_source);
+    let source = this.parseSourceFile(_source);
     let destination = this.parseBucketAndKey(_destination);
     let config = _.merge({
       Bucket: destination.bucket,
