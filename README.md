@@ -50,7 +50,7 @@ module.exports = {
 
 ## Configuration
 
-When you instantiate storage service `StorageService.create(type, config)` you can pass `provider` object.
+When you instantiate storage service `StorageService(type, config)` you can pass `provider` object.
 And all other free space you can use for your needs.
 
 `config.provider` - {Object} Configuration object for storage provider
@@ -90,7 +90,8 @@ Remove specified file from storage. Returns Promise.
 ### AmazonStorage (upload)
 
 ```javascript
-let fs = require('fs');
+import fs from 'fs';
+
 let amazon = StorageService('amazon', {
   provider: {
     accessKeyId: '<AMAZON_ACCESS_KEY_ID>',
@@ -139,6 +140,8 @@ amazon
 ### LocalStorage
 
 ```javascript
+import path from 'path';
+
 let local = StorageService('local', {
   provider: {
     uploads: path.resolve(__dirname, '../uploads')
