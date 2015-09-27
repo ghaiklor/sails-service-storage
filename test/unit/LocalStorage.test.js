@@ -5,9 +5,7 @@ import sinon from 'sinon';
 import LocalStorage from '../../src/LocalStorage';
 
 const PROVIDER_CONFIG = {
-  provider: {
-    uploadsDir: path.resolve(__dirname, '../uploads')
-  }
+  uploads: path.resolve(__dirname, '../uploads')
 };
 
 describe('LocalStorage', () => {

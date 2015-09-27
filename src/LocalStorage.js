@@ -3,14 +3,12 @@ import path from 'path';
 import mkdirp from 'mkdirp';
 import BaseStorage from './BaseStorage';
 
-const UPLOADS_DIR = 'provider.uploadsDir';
-
 export default class LocalStorage extends BaseStorage {
   constructor(...args) {
     super(...args);
 
     this.setProvider(fs);
-    this.createUploadsFolder(this.get(UPLOADS_DIR));
+    this.createUploadsFolder(this.get('uploads'));
   }
 
   /**
@@ -30,7 +28,7 @@ export default class LocalStorage extends BaseStorage {
    * @returns {Buffer}
    * @private
    */
-  parseFile(source) {
+  parseSourceFile(source) {
     let buffer;
 
     if (typeof source === 'string') {
@@ -52,8 +50,8 @@ export default class LocalStorage extends BaseStorage {
    * @returns {Promise}
    */
   upload(_source, _destination, _config) {
-    let source = this.parseFile(_source);
-    let destination = path.resolve(this.get(UPLOADS_DIR), _destination);
+    let source = this.parseSourceFile(_source);
+    let destination = path.resolve(this.get('uploads'), _destination);
 
     return new Promise((resolve, reject) => {
       this.getProvider().writeFile(destination, source, error => error ? reject(error) : resolve());
@@ -67,7 +65,7 @@ export default class LocalStorage extends BaseStorage {
    * @returns {Promise}
    */
   download(_source, _config) {
-    let source = path.resolve(this.get(UPLOADS_DIR), _source);
+    let source = path.resolve(this.get('uploads'), _source);
 
     return new Promise((resolve, reject) => {
       this.getProvider().readFile(source, (error, data) => error ? reject(error) : resolve(data));
@@ -81,7 +79,7 @@ export default class LocalStorage extends BaseStorage {
    * @returns {Promise}
    */
   remove(_source, _config) {
-    var source = path.resolve(this.get(UPLOADS_DIR), _source);
+    var source = path.resolve(this.get('uploads'), _source);
 
     return new Promise((resolve, reject) => {
       this.getProvider().unlink(source, error => error ? reject(error) : resolve());
