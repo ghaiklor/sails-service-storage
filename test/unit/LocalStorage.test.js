@@ -19,10 +19,10 @@ describe('LocalStorage', () => {
     let storage = new LocalStorage(PROVIDER_CONFIG);
 
     storage
-      .upload('./.editorconfig', '.editorconfig_copy')
+      .upload('.editorconfig', '.editorconfig_copy')
       .then(() => {
-        assert.ok(fs.existsSync('./uploads/.editorconfig_copy'));
-        assert.deepEqual(fs.readFileSync('./.editorconfig'), fs.readFileSync('./uploads/.editorconfig_copy'));
+        assert.ok(fs.existsSync('./test/uploads/.editorconfig_copy'));
+        assert.deepEqual(fs.readFileSync('./.editorconfig'), fs.readFileSync('./test/uploads/.editorconfig_copy'));
         done();
       })
       .catch(done)
@@ -34,8 +34,8 @@ describe('LocalStorage', () => {
     storage
       .upload(fs.readFileSync('./.editorconfig'), '.editorconfig_copy_2')
       .then(() => {
-        assert.ok(fs.existsSync('./uploads/.editorconfig_copy_2'));
-        assert.deepEqual(fs.readFileSync('./.editorconfig'), fs.readFileSync('./uploads/.editorconfig_copy_2'));
+        assert.ok(fs.existsSync('./test/uploads/.editorconfig_copy_2'));
+        assert.deepEqual(fs.readFileSync('./.editorconfig'), fs.readFileSync('./test/uploads/.editorconfig_copy_2'));
         done();
       })
       .catch(done)
@@ -101,8 +101,8 @@ describe('LocalStorage', () => {
     storage
       .remove('.editorconfig_copy')
       .then(() => {
-        assert.notOk(fs.existsSync('./uploads/.editorconfig_copy'));
-        assert.ok(fs.existsSync('./uploads/.editorconfig_copy_2'));
+        assert.notOk(fs.existsSync('./test/uploads/.editorconfig_copy'));
+        assert.ok(fs.existsSync('./test/uploads/.editorconfig_copy_2'));
         done();
       })
       .catch(done);
