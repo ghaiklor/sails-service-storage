@@ -24,30 +24,24 @@ Install this module.
 npm install sails-service-storage
 ```
 
-Then require it in your service.
+Then require it in your service and create storage instance.
 
 ```javascript
 // api/services/StorageService.js
-module.exports = require('sails-service-storage');
-```
+import StorageService from 'sails-service-storage';
 
-That's it, you can create storage instances for your needs in your project.
-
-```javascript
-// api/controllers/StorageController.js
-var amazon = StorageService.create('amazon', {
-  provider: {
-    accessKeyId: '<AMAZON_ACCESS_KEY_ID>',
-    secretAccessKey: '<AMAZON_SECRET_ACCESS_KEY>'
-  }
+export default StorageService('amazon', {
+  accessKeyId: '',
+  secretAccessKey: ''
 });
 
+// api/controllers/StorageController.js
 module.exports = {
   upload: function(req, res) {
     amazon
       .upload('<SOURCE>', '<BUCKET>:<KEY>')
       .then(res.ok)
-      .catch(res.serverError);
+      .catch(res.negotiate);
   }
 };
 ```
@@ -94,8 +88,8 @@ Remove specified file from storage. Returns Promise.
 ### AmazonStorage (upload)
 
 ```javascript
-var fs = require('fs');
-var amazon = StorageService.create('amazon', {
+let fs = require('fs');
+let amazon = StorageService('amazon', {
   provider: {
     accessKeyId: '<AMAZON_ACCESS_KEY_ID>',
     secretAccessKey: '<AMAZON_SECRET_ACCESS_KEY>'
@@ -111,7 +105,7 @@ amazon
 ### AmazonStorage (download)
 
 ```javascript
-var amazon = StorageService.create('amazon', {
+let amazon = StorageService('amazon', {
   provider: {
     accessKeyId: '<AMAZON_ACCESS_KEY_ID>',
     secretAccessKey: '<AMAZON_SECRET_ACCESS_KEY>'
@@ -127,7 +121,7 @@ amazon
 ### AmazonStorage (remove)
 
 ```javascript
-var amazon = StorageService.create('amazon', {
+let amazon = StorageService('amazon', {
   provider: {
     accessKeyId: '<AMAZON_ACCESS_KEY_ID>',
     secretAccessKey: '<AMAZON_SECRET_ACCESS_KEY>'
@@ -143,10 +137,8 @@ amazon
 ### LocalStorage
 
 ```javascript
-var local = StorageService.create('local', {
-  provider: {
-    uploadsDir: path.resolve(__dirname, '../uploads')
-  }
+let local = StorageService('local', {
+  uploads: path.resolve(__dirname, '../uploads')
 });
 
 local
