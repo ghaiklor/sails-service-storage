@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.2
+
+- Update `aws-sdk` to the latest version;
+
 ## 3.0.1
 
 - Typo fixes in documentation;
