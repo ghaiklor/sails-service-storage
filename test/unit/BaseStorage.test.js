@@ -35,7 +35,7 @@ describe('BaseStorage', () => {
   it('Should properly get/set provider', () => {
     let storage = new BaseStorage();
 
-    assert.notOk(storage.getProvider());
+    assert.deepEqual(storage.getProvider(), {});
     assert.instanceOf(storage.setProvider('PROVIDER'), BaseStorage);
     assert.equal(storage.getProvider(), 'PROVIDER');
   });

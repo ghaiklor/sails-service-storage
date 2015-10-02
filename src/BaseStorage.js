@@ -3,6 +3,7 @@ import _ from 'lodash';
 export default class BaseStorage {
   constructor(_config) {
     this._config = {};
+    this._provider = {};
 
     _.assign(this._config, _config);
   }

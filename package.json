@@ -1,6 +1,6 @@
 {
   "name": "sails-service-storage",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "Service for Sails framework with Storage features",
   "main": "lib/index.js",
   "scripts": {

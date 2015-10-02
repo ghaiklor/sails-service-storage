@@ -40,7 +40,7 @@ export default StorageService('amazon', {
 // api/controllers/StorageController.js
 module.exports = {
   upload: function(req, res) {
-    amazon
+    StorageService
       .upload('<SOURCE>', '<BUCKET>:<KEY>')
       .then(res.ok)
       .catch(res.negotiate);

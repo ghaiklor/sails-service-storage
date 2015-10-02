@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.0.3
+
+- General improvements;
+- Update `aws-sdk` to 2.2.6;
+
 ## 3.0.2
 
 - Update `aws-sdk` to the latest version;
