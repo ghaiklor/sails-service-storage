@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.1.0
+
+- Bump dependencies;
+
 ## 3.0.3
 
 - General improvements;
