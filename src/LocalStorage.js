@@ -4,8 +4,8 @@ import mkdirp from 'mkdirp';
 import BaseStorage from './BaseStorage';
 
 export default class LocalStorage extends BaseStorage {
-  constructor(...args) {
-    super(...args);
+  constructor(config) {
+    super(config);
 
     this.setProvider(fs);
     this.createUploadsFolder(this.get('provider.uploads'));

@@ -4,8 +4,8 @@ import _ from 'lodash';
 import BaseStorage from './BaseStorage';
 
 export default class AmazonStorage extends BaseStorage {
-  constructor(...args) {
-    super(...args);
+  constructor(config) {
+    super(config);
 
     this.setProvider(new AWS.S3(this.get('provider')));
   }
