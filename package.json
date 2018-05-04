@@ -27,7 +27,7 @@
   "homepage": "https://github.com/ghaiklor/sails-service-storage#readme",
   "dependencies": {
     "aws-sdk": "2.215.1",
-    "lodash": "4.17.5",
+    "lodash": "4.17.9",
     "mkdirp": "0.5.1"
   },
   "devDependencies": {
