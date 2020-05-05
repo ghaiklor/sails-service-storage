@@ -28,7 +28,7 @@
   "dependencies": {
     "aws-sdk": "2.642.0",
     "lodash": "4.17.15",
-    "mkdirp": "0.5.3"
+    "mkdirp": "0.5.4"
   },
   "devDependencies": {
     "babel-cli": "6.26.0",
